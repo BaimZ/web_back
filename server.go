@@ -1,6 +1,7 @@
 package webback
 
 import (
+	"context"
 	"net/http"
 	"time"
 )
@@ -16,4 +17,10 @@ func (s *Server) Run(port string) error {
 		ReadTimeout:    10 * time.Second,
 		WriteTimeout:   10 * time.Second,
 	}
+
+	return s.httpServer.ListenAndServe()
+}
+
+func (s *Server) ShutDown(ctx context.Context) error {
+	return s.httpServer.Shutdown(ctx)
 }
